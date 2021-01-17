@@ -24,7 +24,7 @@
 <script>
     import axios from 'axios'
     export default {
-        props: ['task', 'reloadTask', 'showEdit', 'assignDataEdit'],
+        props: ['task', 'fetchTask', 'showEdit', 'assignDataEdit'],
         methods: {
             editTask(id) {
                 axios({
@@ -33,9 +33,7 @@
                     headers: {
                         access_token: localStorage.access_token
                     }
-                }).then(({
-                    data
-                }) => {
+                }).then(({ data }) => {
                     console.log(data, 'edit data')
                     this.assignDataEdit(data)
                     this.showEdit(true)
@@ -53,7 +51,7 @@
                 }).then(({
                     data
                 }) => {
-                    this.reloadTask()
+                    this.fetchTask()
                 }).catch(err => {
                     console.log(err)
                 })

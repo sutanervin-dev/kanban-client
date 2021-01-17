@@ -9,7 +9,7 @@
                 <div class="row">
                     <Task v-for="task in filterTask" :key="task.id" 
                     :task="task" 
-                    :reloadTask="reloadTask"
+                    :fetchTask="reloadTask"
                     :showEdit="showEdit"
                     :assignDataEdit="assignDataEdit"
                     ></Task>
@@ -22,7 +22,7 @@
 <script>
     import Task from '../components/Task'
     export default {
-        props: ['dataCategory', 'dataTask', 'reloadTask', 'showEdit', 'assignDataEdit'],
+        props: ['dataCategory', 'dataTask', 'fetchTask', 'showEdit', 'assignDataEdit'],
         components: {
             Task
         },

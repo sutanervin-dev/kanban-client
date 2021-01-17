@@ -50,11 +50,10 @@ import axios from 'axios'
                         access_token: localStorage.access_token
                     }
                 }).then(({ data }) => {
-                    console.log(data)
                     this.fetchTask()
                     this.changeShowAdd(false)
                 }).catch(err => {
-                    console.log(err.response)
+                    console.log(err)
                 })
             }
         }

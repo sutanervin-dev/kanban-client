@@ -18,6 +18,8 @@
                             <option>done</option>
                         </select>
                     </div>
+
+                    <button type="submit" class="btn btn-primary" @click.prevent="changeShowEdit(false)">Cancel</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
@@ -28,7 +30,7 @@
 <script>
 import axios from 'axios'
 export default {
-    props: ['dataToEdit', 'reloadTask'],
+    props: ['dataToEdit', 'changeShowEdit', 'fetchTask'],
     data(){
       return{
           title: this.dataToEdit.title,
@@ -50,8 +52,8 @@ export default {
                     access_token: localStorage.access_token
                 }
             }).then(({ data }) => {
-                console.log(data, 'updated data')
-                this.reloadTask()
+                this.fetchTask()
+                this.changeShowEdit(false)
             }).catch(err => {
                 console.log(err)
             })

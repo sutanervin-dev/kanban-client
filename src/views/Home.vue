@@ -6,7 +6,7 @@
                 :key="category.id" 
                 :dataCategory="category" 
                 :dataTask="tasks"
-                :reloadTask="fetchTask"
+                :fetchTask="fetchTask"
                 :showEdit="changeShowEdit"
                 :assignDataEdit="assignDataEdit"
                 ></Board>

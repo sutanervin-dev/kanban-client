@@ -10792,7 +10792,12 @@ module.exports.default = axios;
 
 },{"./utils":"node_modules/axios/lib/utils.js","./helpers/bind":"node_modules/axios/lib/helpers/bind.js","./core/Axios":"node_modules/axios/lib/core/Axios.js","./core/mergeConfig":"node_modules/axios/lib/core/mergeConfig.js","./defaults":"node_modules/axios/lib/defaults.js","./cancel/Cancel":"node_modules/axios/lib/cancel/Cancel.js","./cancel/CancelToken":"node_modules/axios/lib/cancel/CancelToken.js","./cancel/isCancel":"node_modules/axios/lib/cancel/isCancel.js","./helpers/spread":"node_modules/axios/lib/helpers/spread.js","./helpers/isAxiosError":"node_modules/axios/lib/helpers/isAxiosError.js"}],"node_modules/axios/index.js":[function(require,module,exports) {
 module.exports = require('./lib/axios');
-},{"./lib/axios":"node_modules/axios/lib/axios.js"}],"src/views/Login.vue":[function(require,module,exports) {
+},{"./lib/axios":"node_modules/axios/lib/axios.js"}],"node_modules/vue-google-login/dist/vue-google-login.min.js":[function(require,module,exports) {
+var define;
+!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e((t=t||self)["vue-google-login"]={})}(this,(function(t){"use strict";var e,n,i=function(t){return e?Promise.resolve(e):(n||(n=function(t){return new Promise((function(n,i){window.onGapiLoad=function(){window.gapi.load("auth2",(function(){try{e=window.gapi.auth2.init(Object.assign({},t))}catch(t){i({err:"client_id missing or is incorrect, or if you added extra params maybe they are written incorrectly, did you add it to the component or plugin?"})}n(e)}))}}))}(t)),n)},o=function(t,e){if(t)return t[e]();return Promise.reject({err:"Script not loaded correctly, did you added the plugin or the client_id to the component?"})},r={load:function(t){return Promise.all([i(t),new Promise((function(t,e){if(!document.getElementById("auth2_script_id")){var n=document.createElement("script");n.setAttribute("src","https://apis.google.com/js/platform.js?onload=onGapiLoad"),n.setAttribute("async",!0),n.setAttribute("defer","defer"),n.setAttribute("id","auth2_script_id"),document.head.appendChild(n)}t()}))]).then((function(t){return t[0]}))},signIn:function(){return o(e,"signIn")},signOut:function(){return o(e,"signOut")},isSignedIn:function(){return o(e.isSignedIn,"get")},currentUser:function(){return o(e.currentUser,"get")},grantOfflineAccess:function(){return o(e,"grantOfflineAccess")}},s=0;var u=function(t,e,n,i,o,r,s,u,c,d){"boolean"!=typeof s&&(c=u,u=s,s=!1);var a,l="function"==typeof n?n.options:n;if(t&&t.render&&(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,o&&(l.functional=!0)),i&&(l._scopeId=i),r?(a=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),e&&e.call(this,c(t)),t&&t._registeredComponents&&t._registeredComponents.add(r)},l._ssrRegister=a):e&&(a=s?function(){e.call(this,d(this.$root.$options.shadowRoot))}:function(t){e.call(this,u(t))}),a)if(l.functional){var f=l.render;l.render=function(t,e){return a.call(e),f(t,e)}}else{var h=l.beforeCreate;l.beforeCreate=h?[].concat(h,a):[a]}return n}({render:function(){var t=this.$createElement,e=this._self._c||t;return this.renderParams&&!this.logoutButton?e("div",{attrs:{id:this.id},on:{click:this.handleClick}}):e("button",{attrs:{id:this.id},on:{click:this.handleClick}},[this._t("default")],2)},staticRenderFns:[]},void 0,{name:"GoogleLogin",props:{params:{type:Object,required:!0},onCurrentUser:{type:Function,default:function(){}},onSuccess:{type:Function,default:function(){}},onFailure:{type:Function,default:function(){}},logoutButton:{type:Boolean,default:!1},renderParams:{type:Object,required:!1}},beforeCreate:function(){this.id="google-signin-btn-".concat(s++)},methods:{handleClick:function(){var t=this,e=this.logoutButton?"signOut":"signIn";r[e]().then((function(e){return t.onSuccess(e)})).catch((function(e){return t.onFailure(e)}))}},mounted:function(){var t=this;r.load(this.params).then((function(){t.renderParams&&!1===t.logoutButton&&window.gapi.signin2.render(t.id,t.renderParams),r.isSignedIn()&&t.onCurrentUser(r.currentUser())})).catch((function(t){console.log(t)}))}},void 0,!1,void 0,void 0,void 0),c={install:function(t,e){t.GoogleAuth=r.load(e)}};t.GoogleLogin=u,t.LoaderPlugin=c,t.default=u,Object.defineProperty(t,"__esModule",{value:!0})}));
+
+
+},{}],"src/views/Login.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10801,6 +10806,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
+
+var _vueGoogleLogin = _interopRequireDefault(require("vue-google-login"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10825,12 +10832,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   props: ['dataIsLogin', 'changeLogin', 'changeRegister'],
+  components: {
+    GoogleLogin: _vueGoogleLogin.default
+  },
   data: function data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      params: {
+        client_id: '633618943220-bvn060o0j8gg98venuti0sfdpsmrq1nf.apps.googleusercontent.com'
+      },
+      renderParams: {
+        width: 250,
+        height: 50,
+        longtitle: true
+      }
     };
   },
   methods: {
@@ -10845,12 +10864,31 @@ var _default = {
           password: this.password
         }
       }).then(function (response) {
-        console.log(response);
+        // console.log(response, 'login biasa');
         localStorage.access_token = response.data.access_token;
 
         _this.changeLogin(true);
       }).catch(function (err) {
         console.log(err); //sementara
+      });
+    },
+    onSuccess: function onSuccess(googleUser) {
+      var _this2 = this;
+
+      var id_token = googleUser.getAuthResponse().id_token;
+      (0, _axios.default)({
+        method: 'POST',
+        url: 'http://localhost:3002/googleLogin',
+        data: {
+          id_token: id_token
+        }
+      }).then(function (response) {
+        // console.log(response, 'response glogin')
+        localStorage.access_token = response.data.access_token;
+
+        _this2.changeLogin(true);
+      }).catch(function (err) {
+        console.log(err);
       });
     }
   }
@@ -10963,8 +11001,17 @@ exports.default = _default;
                   }
                 },
                 [_vm._v("register")]
-              )
-            ]
+              ),
+              _vm._v(" "),
+              _c("GoogleLogin", {
+                attrs: {
+                  params: _vm.params,
+                  renderParams: _vm.renderParams,
+                  onSuccess: _vm.onSuccess
+                }
+              })
+            ],
+            1
           )
         ])
       ]
@@ -11004,7 +11051,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","_css_loader":"C:/Users/dodolipaw/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/views/Register.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","vue-google-login":"node_modules/vue-google-login/dist/vue-google-login.min.js","_css_loader":"C:/Users/dodolipaw/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/views/Register.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11234,7 +11281,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 var _default = {
-  props: ['task', 'reloadTask', 'showEdit', 'assignDataEdit'],
+  props: ['task', 'fetchTask', 'showEdit', 'assignDataEdit'],
   methods: {
     editTask: function editTask(id) {
       var _this = this;
@@ -11268,7 +11315,7 @@ var _default = {
       }).then(function (_ref2) {
         var data = _ref2.data;
 
-        _this2.reloadTask();
+        _this2.fetchTask();
       }).catch(function (err) {
         console.log(err);
       });
@@ -11395,7 +11442,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 var _default = {
-  props: ['dataCategory', 'dataTask', 'reloadTask', 'showEdit', 'assignDataEdit'],
+  props: ['dataCategory', 'dataTask', 'fetchTask', 'showEdit', 'assignDataEdit'],
   components: {
     Task: _Task.default
   },
@@ -11443,7 +11490,7 @@ exports.default = _default;
                   key: task.id,
                   attrs: {
                     task: task,
-                    reloadTask: _vm.reloadTask,
+                    fetchTask: _vm.reloadTask,
                     showEdit: _vm.showEdit,
                     assignDataEdit: _vm.assignDataEdit
                   }
@@ -11560,7 +11607,7 @@ exports.default = _default;
             attrs: {
               dataCategory: category,
               dataTask: _vm.tasks,
-              reloadTask: _vm.fetchTask,
+              fetchTask: _vm.fetchTask,
               showEdit: _vm.changeShowEdit,
               assignDataEdit: _vm.assignDataEdit
             }
@@ -11668,13 +11715,12 @@ var _default = {
         }
       }).then(function (_ref) {
         var data = _ref.data;
-        console.log(data);
 
         _this.fetchTask();
 
         _this.changeShowAdd(false);
       }).catch(function (err) {
-        console.log(err.response);
+        console.log(err);
       });
     }
   }
@@ -11888,8 +11934,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 var _default = {
-  props: ['dataToEdit', 'reloadTask'],
+  props: ['dataToEdit', 'changeShowEdit', 'fetchTask'],
   data: function data() {
     return {
       title: this.dataToEdit.title,
@@ -11914,9 +11962,10 @@ var _default = {
         }
       }).then(function (_ref) {
         var data = _ref.data;
-        console.log(data, 'updated data');
 
-        _this.reloadTask();
+        _this.fetchTask();
+
+        _this.changeShowEdit(false);
       }).catch(function (err) {
         console.log(err);
       });
@@ -12046,6 +12095,21 @@ exports.default = _default;
                   ]
                 )
               ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "submit" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.changeShowEdit(false)
+                    }
+                  }
+                },
+                [_vm._v("Cancel")]
+              ),
               _vm._v(" "),
               _c(
                 "button",
@@ -12399,7 +12463,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65253" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49976" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
